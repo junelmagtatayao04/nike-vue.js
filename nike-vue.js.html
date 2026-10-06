@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.3.1/css/all.min.css"
+        integrity="sha512-QeR2VH+lsBE5LSAe1Q5EnTBbe7XTBubt8dG93Y7gidSgdMCr8nVqKcfKAMyN96SV8KDbZVTDXChatu5G2KQGzg=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Document</title>
+</head>
+
+<body class="bg-rose-950">
+    <div id="app">
+
+        <nav>
+            <div class="flex justify-between text-red-600 bg-rose-950 h-20 items-center">
+
+                <img src="https://static-cdn.jtvnw.net/jtv_user_pictures/f53197cd-807f-4b5b-9a89-b78b93fb7ff9-profile_image-300x300.png"
+                    alt="" class="w-15 h-15 mx-5 rounded-full animate-spin">
+
+                <div class="flex justify-center items-center gap-5 font-bold text-xl animate-pulse">
+                    <h1 class="hover:bg-black rounded-md cursor-pointer" @click="page = 'home'">Home</h1>
+                    <h1 class="hover:bg-black rounded-md cursor-pointer" @click="page = 'product'">Product</h1>
+                    <h1 class="hover:bg-black rounded-md cursor-pointer" @click="page = 'about'">About</h1>
+                    </h1>
+                    <h1 class="hover:bg-black rounded-md cursor-pointer" @click="page = 'contact'">Contact</h1>
+                </div>
+                <div>
+                    <i class="fa-solid fa-cart-shopping mr-10 text-yellow-500 text-xl hover:bg-yellow-700 cursor-pointer animate-bounce rounded-md"
+                        @click="page = 'cart'">{{cart.length}}></i>
+                </div>
+
+            </div>
+        </nav>
+
+        <!-- homesection -->
+        <section v-if="page === 'home'">
+            <div
+                class="bg-[url('https://th.bing.com/th/id/R.62e1d1a27673adf7f628807f3f5bf9d1?rik=aMzoD0hPCjRE4g&riu=http%3a%2f%2fwallpapercave.com%2fwp%2fmgLD9hB.jpg&ehk=Y94saed8jIxiknqKXoopWEt6eXUBaLzDhDd5swVgAD0%3d&risl=&pid=ImgRaw&r=0')] bg-cover bg-center h-screen">
+                <h1 class="text-center font-bold text-7xl text-rose-950 animate-pulse ">Nike World</h1>
+            </div>
+        </section>
+
+        <!-- footer -->
+        <section v-if="page === 'home'">
+                <div class="flex justify-center items-center mt-20 gap-4 ">
+                    <div class="text-md text-blue-600 shadow-xl bg-white rounded-full w-10 h-10 flex items-center justify-center">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </div>
+                    <div class="text-md text-blue-600 shadow-xl bg-white rounded-full w-10 h-10 flex items-center justify-center">
+                        <i class="fa-brands fa-twitter"></i>
+                    </div>
+                    <div class="text-md text-blue-600 shadow-xl bg-white rounded-full w-10 h-10 flex items-center justify-center font-bold">
+                        <h1>in</h1>
+                    </div>
+                </div>
+                <div>
+                    <h1 class="font-bold text-md text-center mt-5 text-blue-600">250 Executive Park Blvd,Suite 3400 *
+                        New
+                        Agno CA 94134 * Kapalong DDN</h1>
+                    <div class="flex justify-center items-center mt-5 gap-5">
+                        <i class="fa-solid fa-phone text-blue-600"></i>
+                        <h1 class="text-blue-600 font-bold text-1xl">+ 0909-204-7497</h1>
+                        <i class="fa-regular fa-envelope text-blue-600"></i>
+                        <h1 class="font-bold text-md text-center text-1xl text-blue-600">Junelmagtatayao@gmail.com</h1>
+                    </div>
+                </div>
+        </section>
+
+        <!-- productsection -->
+        <div v-if="page === 'product'" class="flex justify-center">
+            <div class="grid grid-cols-3 gap-5">
+                <div v-for="product in products" :key="product.id" class="bg-black rounded-md px-5 py-5 mt-10">
+                    <img :src="product.image" alt="" class="rounded-md min-w-20 max-w-80">
+                    <div>
+                        <h1 class="font-semibold text-md text-white">{{product.brand}}</h1>
+                        <h1 class="font-semibold text-md text-white">{{product.details}}</h1>
+                        <h1 class="font-bold text-red-600 text-xl text-white">₱{{product.price}}</h1>
+                    </div>
+                    <button @click="addtocart(product)"
+                        class="bg-yellow-600 rounded-md px-4 py-2 mt-5 hover:bg-blue-700 cursor-pointer animate-pulse font-bold">Add
+                        to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- about section -->
+        <section>
+            <div v-if="page === 'about'" class="flex justify-center mt-20">
+                <div class="grid grid-cols-3 gap-5">
+                    <div v-for="about in abouts" :key="about.id" class="w-90 h-fit bg-black shadow-xl rounded-sm text-white font-awesome">
+                        <img :src="about.icon" alt="">
+                        <div>
+                            <h1 class="font-bold text-2xl">{{about.details}}</h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- contact section -->
+        <section>
+            <div v-if="page === 'contact'" class="flex justify-center items-center h-fit mt-10">
+
+                <div class="w-100 h-110 bg-gray-50 shadow-2xl rounded-xl p-5">
+                    <div class="text-center text-2xl font-semibold text-blue-700">
+                        <p>Contact Us</p>
+                    </div>
+
+                    <div class="space-y-3 mt-10">
+                        <input type="text" class="border border-gray-500 rounded-xl w-full py-2 px-4"
+                            placeholder="Name">
+                        <input type="text" class="border border-gray-500 rounded-xl w-full py-2 px-4"
+                            placeholder="E-Mail">
+                        <div>
+                            <textarea class="w-full" name="" id=""></textarea>
+                        </div>
+                        <button
+                            class="bg-blue-800 w-full text-white py-2 text-xl font-bold rounded-full hover:bg-blue-600 cursor-pointer mt-10">
+                            <h1>Submit</h1>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section v-if="page === 'contact'">
+            <div class="flex justify-center items-center mt-20 gap-4">
+                <i
+                    class="fa-brands fa-facebook-f text-md text-blue-600 bg-white-600 shadow-xl rounded-full px-4 py-2"></i>
+                <i class="fa-brands fa-twitter text-md text-blue-600 bg-white-600 shadow-xl rounded-full px-4 py-2"></i>
+                <h1 class=" text-md text-blue-600 bg-white-600 shadow-xl rounded-full px-4 py-2 font-bold">in</h1>
+            </div>
+            <div>
+                <h1 class="font-bold text-md text-center mt-5 text-blue-600">250 Executive Park Blvd,Suite 3400 * New
+                    Agno CA 94134 * Kapalong DDN</h1>
+                <div class="flex justify-center items-center mt-5 gap-5">
+                    <i class="fa-solid fa-phone text-blue-600"></i>
+                    <h1 class="text-blue-600 font-bold text-1xl">+ 0909-204-7497</h1>
+                    <i class="fa-regular fa-envelope text-blue-600"></i>
+                    <h1 class="font-bold text-md text-center text-1xl text-blue-600">Junelmagtatayao@gmail.com</h1>
+                </div>
+            </div>
+
+        </section>
+
+        <!-- cart -->
+        <div v-if="page === 'cart'" class="flex justify-center bg-orange-600 h-fit">
+            <div>
+
+                <div class="grid grid-cols-3 gap-5">
+                    <div v-for="(item, index) in cart" :key="item.id" class="bg-yellow-600 rounded-md px-5 py-5">
+                        <img :src="item.image" alt="" class="rounded-md min-w-20 max-w-80">
+                        <div>
+                            <h1 class="font-bold text-2xl">{{item.brand}}</h1>
+                            <h1 class="font-bold text-2xl">{{item.details}}</h1>
+                            <h1 class="font-bold text-red-600 text-xl">₱{{item.price}}</h1>
+                        </div>
+                        <div class="flex justify-between font-bold">
+                            <button @click="buyNow(item)"
+                                class="bg-blue-600 rounded-md px-4 py-2 mt-5 hover:bg-blue-700 cursor-pointer animate-pulse">Check
+                                out</button>
+                            <button @click="cancel(index)"
+                                class="bg-red-600 rounded-md px-4 py-2 mt-5 hover:bg-red-700 cursor-pointer animate-pulse">cancel</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- total purchase -->
+
+                <div v-if="cart.length > 0" class="bg-white p-5 mt-5 rounded shadow">
+                    <h2 class="text-2xl font-bold">total purchase: ${{ total }}</h2>
+                    <button @click="purchaseAll" class="bg-green-600 text-white px-5 py-3 mt-3 rounded">purchase all
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+
+        Vue.createApp({
+            data() {
+                return {
+
+                    page: 'home',
+                    cart: [],
+                    total: 0,
+
+
+                    products: [
+                        { id: 1, image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8c2hvZXMlMjBuaWtlfGVufDB8fDB8fHww", brand: "Nike", details: "White", price: 450 },
+                        { id: 2, image: "https://images.unsplash.com/photo-1662411198835-c5a151d2af9e?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", brand: "Nike", details: "Black n white", price: 650 },
+                        { id: 3, image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=764&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", brand: "Nike", details: "Yellow Green", price: 850 },
+                        { id: 4, image: "https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjV8fG5pa2UlMjBzaG9lc3xlbnwwfHwwfHx8MA%3D%3D", brand: "Nike", details: "gray", price: 250 },
+                        { id: 5, image: "https://images.unsplash.com/photo-1747691875590-14db938e42d4?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", brand: "Nike", details: "Green", price: 350 },
+                        { id: 6, image: "https://images.unsplash.com/photo-1557461761-c7c2b7a5fa97?q=80&w=765&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D", brand: "Nike", details: "black", price: 300 }
+                    ],
+
+                    abouts: [
+                        { id: 1, icon: "https://images.squarespace-cdn.com/content/v1/639a06ed2247975a26606ba0/93ad18fb-577e-4f45-9ae9-21b369ce4020/DSC02999+3.JPG?format=1000w", details: "Running" },
+                        { id: 2, icon: "https://tse1.mm.bing.net/th/id/OIP.w-UXBHwE7WMjUcJSh6cxOQAAAA?r=0&rs=1&pid=ImgDetMain&o=7&rm=3", details: "Hiking" },
+                        { id: 3, icon: "https://i.pinimg.com/736x/87/63/68/876368667b45d2f90d8687fab0d27dfc.jpg", details: "Basketball" }
+
+                    ],
+                }
+            },
+
+            methods: {
+                addtocart(item) {
+                    alert('added successfully');
+                    this.total += item.price;
+                    this.cart.push({ image: item.image, price: item.price });
+                    console.log(...this.cart)
+                },
+
+                cancel(index) {
+                    this.total -= this.cart[index].price;
+                    this.cart.splice(index, 1);
+
+                },
+
+                buyNow(product) {
+                    alert('check out successfully');
+                },
+
+                purchaseAll() {
+
+                    alert("purchase successfully");
+
+                    this.cart = [];
+
+                    this.total = 0;
+                }
+
+
+            }
+        }).mount('#app')
+    </script>
+</body>
+
+</html>
